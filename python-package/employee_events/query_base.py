@@ -1,5 +1,7 @@
 # Import any dependencies needed to execute sql queries
 # YOUR CODE HERE
+from sql_execution import sql_query
+
 
 # Define a class called QueryBase
 # Use inheritance to add methods
