@@ -11,7 +11,7 @@ class QueryBase:
     # Create a class attribute called `name`
     # set the attribute to an empty string
     # YOUR CODE HERE
-    name = ""
+    self.name = ""
     # Define a `names` method that receives
     # no passed arguments
     # YOUR CODE HERE
