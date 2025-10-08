@@ -1,6 +1,10 @@
 # Import any dependencies needed to execute sql queries
 # YOUR CODE HERE
 from sql_execution import QueryMixin
+from sqlite3 import connect
+from pathlib import Path
+from functools import wraps
+import pandas as pd
 
 
 # Define a class called QueryBase

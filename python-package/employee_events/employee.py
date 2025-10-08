@@ -29,7 +29,7 @@ class Employee(QueryBase):
         # This query should return the data
         # for all employees in the database
         #### YOUR CODE HERE
-        query3 = f"SELECT {name}.{name}_id, {name}.first_name, {name}.last_name FROM {name}"
+        query3 = f"SELECT {self.name}.{self.name}_id, {self.name}.first_name, {self.name}.last_name FROM {self.name}"
         response = QueryMixin(query3)
         return(response)
     
@@ -47,7 +47,7 @@ class Employee(QueryBase):
         # to only return the full name of the employee
         # with an id equal to the id argument
         #### YOUR CODE HERE
-        query4 = f"SELECT first_name, last_name FROM {name} WHERE {name}_id={id}"
+        query4 = f"SELECT first_name, last_name FROM {self.name} WHERE {self.name}_id={id}"
         response = query(query4)
         return(response)
 
