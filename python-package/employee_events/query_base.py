@@ -29,7 +29,7 @@ class QueryBase:
     # that receives an `id` argument
     # This method should return a pandas dataframe
     # YOUR CODE HERE
-    def event_counts(id):
+    def event_counts(self, id):
         # QUERY 1
         # Write an SQL query that groups by `event_date`
         # and sums the number of positive and negative events
@@ -50,7 +50,7 @@ class QueryBase:
     # Define a `notes` method that receives an id argument
     # This function should return a pandas dataframe
     # YOUR CODE HERE
-    def notes(id):
+    def notes(self, id):
 
         # QUERY 2
         # Write an SQL query that returns `note_date`, and `note`
