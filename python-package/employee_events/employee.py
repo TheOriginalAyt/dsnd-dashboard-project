@@ -1,6 +1,6 @@
 # Import the QueryBase class
 #### YOUR CODE HERE
-from QueryBase import *
+from query_base import *
 # Import dependencies needed for sql execution
 # from the `sql_execution` module
 #### YOUR CODE HERE
@@ -12,7 +12,7 @@ class Employee(QueryBase):
     # Set the class attribute `name`
     # to the string "employee"
     #### YOUR CODE HERE
-    self.name = "employee"
+    name = "employee"
 
 
     # Define a method called `names`
@@ -20,7 +20,7 @@ class Employee(QueryBase):
     # This method should return a list of tuples
     # from an sql execution
     #### YOUR CODE HERE
-    def names(): 
+    def names(self): 
         # Query 3
         # Write an SQL query
         # that selects two columns 
@@ -30,7 +30,7 @@ class Employee(QueryBase):
         # for all employees in the database
         #### YOUR CODE HERE
         query3 = f"SELECT {self.name}.{self.name}_id, {self.name}.first_name, {self.name}.last_name FROM {self.name}"
-        response = QueryMixin(query3)
+        response = QueryMixin.query(query3)
         return(response)
     
 
@@ -39,7 +39,7 @@ class Employee(QueryBase):
     # This method should return a list of tuples
     # from an sql execution
     #### YOUR CODE HERE
-    def username(id):    
+    def username(self, id):    
         # Query 4
         # Write an SQL query
         # that selects an employees full name
@@ -48,7 +48,7 @@ class Employee(QueryBase):
         # with an id equal to the id argument
         #### YOUR CODE HERE
         query4 = f"SELECT first_name, last_name FROM {self.name} WHERE {self.name}_id={id}"
-        response = query(query4)
+        response = QueryMixin.query(query4)
         return(response)
 
 
@@ -62,7 +62,7 @@ class Employee(QueryBase):
     #### YOUR CODE HERE
     def model_data(self, id):
 
-        return pandas_query(f"""
+        return QueryMixin.pandas_query(f"""
                     SELECT SUM(positive_events) positive_events
                          , SUM(negative_events) negative_events
                     FROM {self.name}
@@ -70,3 +70,4 @@ class Employee(QueryBase):
                         USING({self.name}_id)
                     WHERE {self.name}.{self.name}_id = {id}
                 """)
+

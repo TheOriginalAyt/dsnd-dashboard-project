@@ -1,12 +1,9 @@
 # Import the QueryBase class
 # YOUR CODE HERE
-from query_base import QueryBase
+from query_base import *
 # Import dependencies for sql execution
 #### YOUR CODE HERE
-from sqlite3 import connect
-from pathlib import Path
-from functools import wraps
-import pandas as pd
+from sql_execution import *
 
 # Create a subclass of QueryBase
 # called  `Team`
@@ -15,14 +12,14 @@ class Team(QueryBase):
     # Set the class attribute `name`
     # to the string "team"
     #### YOUR CODE HERE
-    self.name = "team"
+    name = "team"
 
     # Define a `names` method
     # that receives no arguments
     # This method should return
     # a list of tuples from an sql execution
     #### YOUR CODE HERE
-    def names():    
+    def names(self):    
         # Query 5
         # Write an SQL query that selects
         # the team_name and team_id columns
@@ -30,7 +27,7 @@ class Team(QueryBase):
         # in the database
         #### YOUR CODE HERE
         query5 = f"SELECT {self.name}.{self.name}_id, {self.name}.team_name FROM {self.name}"
-        response = QueryMixin(query5)
+        response = QueryMixin.query(query5)
         return(response)
     
 
@@ -39,7 +36,7 @@ class Team(QueryBase):
     # This method should return
     # a list of tuples from an sql execution
     #### YOUR CODE HERE
-    def username (id):
+    def username (self, id):
         # Query 6
         # Write an SQL query
         # that selects the team_name column
@@ -48,7 +45,7 @@ class Team(QueryBase):
         # the ID argument
         #### YOUR CODE HERE
         query4 = f"SELECT team_name FROM {self.name} WHERE {self.name}_id={id}"
-        response = query(query6)
+        response = QueryMixin.query(query6)
         return(response)
 
 
@@ -62,7 +59,7 @@ class Team(QueryBase):
     #### YOUR CODE HERE
     def model_data(self, id):
 
-        return sql_execution.pandas_query(f"""
+        return QueryMixin.pandas_query(f"""
             SELECT positive_events, negative_events FROM (
                     SELECT employee_id
                          , SUM(positive_events) positive_events
@@ -74,3 +71,4 @@ class Team(QueryBase):
                     GROUP BY employee_id
                    )
                 """)
+
