@@ -1,6 +1,7 @@
 from fasthtml.common import *
 import matplotlib.pyplot as plt
-
+from employee_events import *
+import load_model from utils.py
 # Import QueryBase, Employee, Team from employee_events
 #### YOUR CODE HERE
 
@@ -25,23 +26,27 @@ from combined_components import FormGroup, CombinedComponent
 # Create a subclass of base_components/dropdown
 # called `ReportDropdown`
 #### YOUR CODE HERE
-    
+class ReportDropdown(Dropdown):
+
     # Overwrite the build_component method
     # ensuring it has the same parameters
     # as the Report parent class's method
     #### YOUR CODE HERE
+    def build_component(self, entity_id, model):
         #  Set the `label` attribute so it is set
         #  to the `name` attribute for the model
         #### YOUR CODE HERE
-        
+        self.label = model.name
         # Return the output from the
         # parent class's build_component method
         #### YOUR CODE HERE
+        return Dropdown.build_component(entity_id, model)
     
     # Overwrite the `component_data` method
     # Ensure the method uses the same parameters
     # as the parent class method
     #### YOUR CODE HERE
+    def component_data(Self, entity_id, model):
         # Using the model argument
         # call the employee_events method
         # that returns the user-type's
@@ -51,12 +56,12 @@ from combined_components import FormGroup, CombinedComponent
 # Create a subclass of base_components/BaseComponent
 # called `Header`
 #### YOUR CODE HERE
-
+class Header(BaseComponent):
     # Overwrite the `build_component` method
     # Ensure the method has the same parameters
     # as the parent class
     #### YOUR CODE HERE
-        
+    def build_component(self,entity_id,model):
         # Using the model argument for this method
         # return a fasthtml H1 objects
         # containing the model's name attribute
@@ -66,11 +71,11 @@ from combined_components import FormGroup, CombinedComponent
 # Create a subclass of base_components/MatplotlibViz
 # called `LineChart`
 #### YOUR CODE HERE
-    
+class LineChart(MatplotlibViz):    
     # Overwrite the parent class's `visualization`
     # method. Use the same parameters as the parent
     #### YOUR CODE HERE
-    
+    def visualization(self,entity_id,model):
 
         # Pass the `asset_id` argument to
         # the model's `event_counts` method to
@@ -121,16 +126,16 @@ from combined_components import FormGroup, CombinedComponent
 # Create a subclass of base_components/MatplotlibViz
 # called `BarChart`
 #### YOUR CODE HERE
-
+class BarChart(MatplotlibViz):
     # Create a `predictor` class attribute
     # assign the attribute to the output
     # of the `load_model` utils function
     #### YOUR CODE HERE
-
+    predictor = load_model
     # Overwrite the parent class `visualization` method
     # Use the same parameters as the parent
     #### YOUR CODE HERE
-
+    def visualizations(self, entity_id,model):
         # Using the model and asset_id arguments
         # pass the `asset_id` to the `.model_data` method
         # to receive the data that can be passed to the machine
@@ -173,24 +178,25 @@ from combined_components import FormGroup, CombinedComponent
 # Create a subclass of combined_components/CombinedComponent
 # called Visualizations       
 #### YOUR CODE HERE
-
+class Visualizations(CombinedComponent):
     # Set the `children`
     # class attribute to a list
     # containing an initialized
     # instance of `LineChart` and `BarChart`
     #### YOUR CODE HERE
-
+    self.children.append(LineChart(userid,model))
+    self.children.appedn(BarChart(userid,model))
     # Leave this line unchanged
     outer_div_type = Div(cls='grid')
             
 # Create a subclass of base_components/DataTable
 # called `NotesTable`
 #### YOUR CODE HERE
-
+class NotesTable(DataTable):
     # Overwrite the `component_data` method
     # using the same parameters as the parent class
     #### YOUR CODE HERE
-        
+    def component_data(self, entity_id, model):    
         # Using the model and entity_id arguments
         # pass the entity_id to the model's .notes 
         # method. Return the output
@@ -218,13 +224,22 @@ class DashboardFilters(FormGroup):
 # Create a subclass of CombinedComponents
 # called `Report`
 #### YOUR CODE HERE
-
+class Report(CombinedComponent):
     # Set the `children`
     # class attribute to a list
     # containing initialized instances 
     # of the header, dashboard filters,
     # data visualizations, and notes table
     #### YOUR CODE HERE
+    headers = Header(entity_id,model)
+    filters = DashboardFilters()
+    dataviz = Visualizations()
+    notes = NotesTable(entity_id, model)
+    self.children=[]
+    self.children.append(headers)
+    self.children.append(filters)
+    self.children.append(dataviz)
+    self.children.append(notes)
 
 # Initialize a fasthtml app 
 #### YOUR CODE HERE
